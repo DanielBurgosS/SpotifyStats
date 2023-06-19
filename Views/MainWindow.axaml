@@ -1,0 +1,45 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SpotifyStats.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="SpotifyStats.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Spotify Statistics"
+        Background="#553D6B">
+
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="ContentPresenter.HorizontalAlignment" Value="Center"/>
+            <Setter Property="ContentPresenter.VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Styles>
+
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+                 to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Button Content="Personal" Click="LoginButton_Click" />
+        <Button Content="General" Click="GeneralButton_Click" Grid.Row="1"/>
+
+    </Grid>
+
+</Window>
