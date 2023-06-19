@@ -1,6 +1,9 @@
 ﻿using Avalonia;
 using Avalonia.ReactiveUI;
 using System;
+using SpotifyStats.Views;
+
+
 
 namespace SpotifyStats
 {
@@ -19,5 +22,6 @@ namespace SpotifyStats
                 .UsePlatformDetect()
                 .LogToTrace()
                 .UseReactiveUI();
+
     }
 }

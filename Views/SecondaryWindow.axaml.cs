@@ -8,5 +8,10 @@ namespace SpotifyStats.Views
         {
             InitializeComponent();
         }
+
+        private void InitializeComponent()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

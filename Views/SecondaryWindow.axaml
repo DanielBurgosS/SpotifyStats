@@ -1,9 +1,71 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:SpotifyStats.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="SpotifyStats.Views.SecondaryWindow"
-        Title="SecondaryWindow">
-  Welcome to Avalonia!
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Spotify Statistics"
+        Background="#553D6B">
+    
+    <Grid>
+        <!-- Content of the overlay -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="450"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="450"/>
+            </Grid.RowDefinitions>
+
+            <!-- Square 1 -->
+            <Border Grid.Row="0" Grid.Column="0" CornerRadius="50"
+                    BorderThickness="3" BorderBrush="#333333">
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Border.RenderTransform>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#1DB954"/>
+                        <GradientStop Offset="1" Color="#2CB954"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <!-- Square 2 -->
+            <Border Grid.Row="2" Grid.Column="1"  CornerRadius="50"
+                    BorderThickness="3" BorderBrush="#333333">
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Border.RenderTransform>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#1DB954"/>
+                        <GradientStop Offset="1" Color="#2CB954"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+
+            <!-- Square 3 -->
+            <Border Grid.Row="0" Grid.Column="2"  CornerRadius="50"
+                    BorderThickness="3" BorderBrush="#333333">
+                <Border.RenderTransform>
+                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                </Border.RenderTransform>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Offset="0" Color="#1DB954"/>
+                        <GradientStop Offset="1" Color="#2CB954"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                
+            </Border>
+        </Grid>
+    </Grid>
 </Window>
