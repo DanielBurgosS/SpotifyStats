@@ -1,5 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using SpotifyAPI.Web;
+
 
 namespace SpotifyStats.Views
 {
@@ -9,7 +11,7 @@ namespace SpotifyStats.Views
         {
             InitializeComponent();
         }
-        
+
         private void Button_Click(object? sender, RoutedEventArgs routedEventArgs)
         {
             // Handle the button click event here
