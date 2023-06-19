@@ -8,37 +8,51 @@
         Icon="/Assets/avalonia-logo.ico"
         Title="Spotify Statistics"
         Background="#553D6B">
-
-  <Window.Styles>
-    <Style Selector="Button">
-      <Setter Property="HorizontalContentAlignment" Value="Center"/>
-      <Setter Property="VerticalAlignment" Value="Center"/>
-      <Setter Property="FontFamily" Value="Arial"/>
-      <Setter Property="FontSize" Value="14"/>
-      <Setter Property="Foreground" Value="White"/>
-      <Setter Property="Margin" Value="10"/>
-      <Setter Property="MinWidth" Value="120"/>
-      <Setter Property="ContentPresenter.HorizontalAlignment" Value="Center"/>
-      <Setter Property="ContentPresenter.VerticalAlignment" Value="Center"/>
-    </Style>
-  </Window.Styles>
+    
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Gotham Circular"/>
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="ContentPresenter.HorizontalAlignment" Value="Center"/>
+            <Setter Property="ContentPresenter.VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#1DB954"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20, 5"/>
+            <Setter Property="CornerRadius" Value="50"/>
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="FontFamily" Value="Gotham Circular"/>
+            <Setter Property="FontSize" Value="100"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+    </Window.Styles>
 
   <Design.DataContext>
     <!-- This only sets the DataContext for the previewer in an IDE,
                  to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainWindowViewModel/>
-  </Design.DataContext>
-
-
-
-  <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="Auto"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
-
-    <Button Content="Personal" Click="LoginButton_Click" />
-    <Button Content="General" Click="GeneralButton_Click" Grid.Row="1"/>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="120"/> <!-- Empty line -->
+            <RowDefinition Height="Auto"/> <!-- Top space for the label -->
+            <RowDefinition Height="120"/> <!-- Empty line -->
+            <RowDefinition Height="*"/> <!-- Space for buttons -->
+            <RowDefinition Height="*"/> <!-- Space for buttons -->
+        </Grid.RowDefinitions>
+        
+        <Label Content="Spotify Statistics" Grid.Row="1" VerticalAlignment="Top"/>
+        <Button Content="Personal" Click="LoginButton_Click" Grid.Row="3"/>
+        <Button Content="General" Click="GeneralButton_Click" Grid.Row="4"/>
 
   </Grid>
 
