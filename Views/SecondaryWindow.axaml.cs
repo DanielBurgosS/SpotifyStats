@@ -13,6 +13,7 @@ namespace SpotifyStats.Views
         public SecondaryWindow()
         {
             InitializeComponent();
+            
         }
 
         private void InitializeComponent()

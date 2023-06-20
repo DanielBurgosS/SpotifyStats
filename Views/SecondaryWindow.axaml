@@ -14,13 +14,13 @@
       <Setter Property="HorizontalContentAlignment" Value="Center"/>
       <Setter Property="VerticalAlignment" Value="Center"/>
       <Setter Property="FontFamily" Value="Gotham Circular"/>
-      <Setter Property="FontSize" Value="50"/>
-      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="FontSize" Value="30"/>
+      <Setter Property="Foreground" Value="Black"/>
       <Setter Property="Margin" Value="10"/>
       <Setter Property="MinWidth" Value="120"/>
       <Setter Property="ContentPresenter.HorizontalAlignment" Value="Center"/>
       <Setter Property="ContentPresenter.VerticalAlignment" Value="Center"/>
-      <Setter Property="Background" Value="#1DB954"/>
+      <Setter Property="Background" Value="#FFFFFF"/>
       <Setter Property="BorderThickness" Value="0"/>
       <Setter Property="Padding" Value="20, 5"/>
       <Setter Property="CornerRadius" Value="50"/>
@@ -30,12 +30,21 @@
       <Setter Property="FontSize" Value="75"/>
       <Setter Property="Foreground" Value="White"/>
       <Setter Property="FontWeight" Value="Bold"/>
+      <Setter Property="FontStyle" Value="Normal"/>
       <Setter Property="HorizontalAlignment" Value="Center"/>
       <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
+    
     <Style Selector="Label.infoLabel">
       <Setter Property="FontSize" Value="40"/>
+      <Setter Property="FontFamily" Value="Gotham Circular"/>
+      <Setter Property="FontWeight" Value="Normal"/>
+      <Setter Property="FontStyle" Value="Normal"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="HorizontalAlignment" Value="Center"/>
+      <Setter Property="VerticalAlignment" Value="Top"/>
     </Style>
+    
   </Window.Styles>
 
   <Grid>
@@ -52,8 +61,8 @@
       </Grid.RowDefinitions>
 
       <!-- Rectangle 1 -->
-      <Border Grid.Row="0" Grid.Column="0" CornerRadius="50"
-              BorderThickness="3" BorderBrush="#333333">
+      <Border Grid.Row="0" Grid.Column="0" CornerRadius="50" BorderThickness="3" BorderBrush="#333333" Margin="0 50 0 0">
+        
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="1"/>
         </Border.RenderTransform>
@@ -66,8 +75,7 @@
       </Border>
 
       <!-- Rectangle 2 -->
-      <Border Grid.Column="1"  CornerRadius="50"
-              BorderThickness="3" BorderBrush="#553D6B">
+      <Border Grid.Row="0" Grid.Column="1"  CornerRadius="50" BorderThickness="3" BorderBrush="#553D6B" Margin="0 50 0 0">
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="1"/>
         </Border.RenderTransform>
@@ -81,8 +89,7 @@
       </Border>
 
       <!-- Rectangle 3 -->
-      <Border Grid.Row="2" Grid.Column="2"  CornerRadius="50"
-              BorderThickness="3" BorderBrush="#333333">
+      <Border Grid.Row="0" Grid.Column="2"  CornerRadius="50" BorderThickness="3" BorderBrush="#333333" Margin="0 50 0 0">
         <Border.RenderTransform>
           <ScaleTransform ScaleX="1" ScaleY="1"/>
         </Border.RenderTransform>
@@ -94,14 +101,16 @@
         </Border.Background>
 
       </Border>
-      <Label Content="Top Artists" Grid.Column="0" VerticalAlignment="Top"/>
-      <Label  Content="Top Tracks" Grid.Column="1" VerticalAlignment="Top"/>
-      <Label Content="Top Genres" Grid.Column="2" VerticalAlignment="Top"/>
-
-      <Label Classes="infoLabel"  Grid.Column="0" VerticalAlignment="Top" Margin="0 100 0 0" Name="Artists"/>
-      <Label Classes="infoLabel" Content="Bot" Grid.Column="1" VerticalAlignment="Top" Margin="0 100 0 0" Name="Tracks"/>
-      <Label Classes="infoLabel" Content="Bot" Grid.Column="2" VerticalAlignment="Top" Margin="0 100 0 0" Name="Genres"/>
-
+      <Label Content="Top Artists" Grid.Column="0" VerticalAlignment="Top" Margin="0 50 0 0"/>
+      <Label  Content="Top Tracks" Grid.Column="1" VerticalAlignment="Top" Margin="0 50 0 0"/>
+      <Label Content="Top Genres" Grid.Column="2" VerticalAlignment="Top" Margin="0 50 0 0"/>
+      
+      <Label Classes="infoLabel"  Grid.Column="0" VerticalAlignment="Top" Margin="0 150 0 0" Name="Artists"/>
+      <Label Classes="infoLabel" Content="" Grid.Column="1" VerticalAlignment="Top" Margin="0 150 0 0" Name="Tracks"/>
+      <Label Classes="infoLabel" Content="Bot" Grid.Column="2" VerticalAlignment="Top" Margin="0 150 0 0" Name="Genres"/>
+      
+      <Button Content="Top 10" Grid.Column="1" VerticalAlignment="Top" Margin="200 0 0 0"/>
+      <Button Content="Top 5" Grid.Column="1" VerticalAlignment="Top" Margin="0 0 200 0"/>
     </Grid>
 
   </Grid>
