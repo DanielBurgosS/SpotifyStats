@@ -1,4 +1,8 @@
 using Avalonia.Controls;
+using Avalonia.Interactivity;
+using SpotifyAPI.Web;
+using System.Threading.Tasks;
+using Avalonia.Markup.Xaml;
 
 namespace SpotifyStats.Views
 {
@@ -11,7 +15,8 @@ namespace SpotifyStats.Views
 
         private void InitializeComponent()
         {
-            throw new System.NotImplementedException();
+            AvaloniaXamlLoader.Load(this);
         }
+        
     }
 }

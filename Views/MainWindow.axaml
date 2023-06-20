@@ -56,7 +56,7 @@
     </Grid.RowDefinitions>
 
     <Label Content="Spotify Statistics" Grid.Row="1" VerticalAlignment="Top" Name="Title"/>
-    <Button Content="Personal" Click="LoginButton_Click" Grid.Row="3"/>
+    <Button Content="Personal" Click="PersonalButton_Click" Grid.Row="3"/>
 
     <Button Content="General" Click="GeneralButton_Click" Grid.Row="4"/>
 

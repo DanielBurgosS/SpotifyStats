@@ -3,6 +3,7 @@ using Avalonia.Interactivity;
 using SpotifyAPI.Web;
 using System.Threading.Tasks;
 
+
 namespace SpotifyStats.Views
 {
     public partial class MainWindow : Window
@@ -18,9 +19,11 @@ namespace SpotifyStats.Views
             // You can perform any necessary actions or logic
         }
 
-        private async void LoginButton_Click(object? sender, RoutedEventArgs e)
+        private async void PersonalButton_Click(object? sender, RoutedEventArgs e)
         {
-
+            SecondaryWindow secondaryWindow = new SecondaryWindow();
+            secondaryWindow.Show();
+            this.Close();
         }
 
         private async void GeneralButton_Click(object? sender, RoutedEventArgs e)
