@@ -7,7 +7,33 @@
         x:Class="SpotifyStats.Views.SecondaryWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="Spotify Statistics"
-        Background="#553D6B">
+        Background="#000000">
+    
+    <Window.Styles>
+        <Style Selector="Button">
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Gotham Circular"/>
+            <Setter Property="FontSize" Value="50"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="ContentPresenter.HorizontalAlignment" Value="Center"/>
+            <Setter Property="ContentPresenter.VerticalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#1DB954"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="20, 5"/>
+            <Setter Property="CornerRadius" Value="50"/>
+        </Style>
+        <Style Selector="Label">
+            <Setter Property="FontFamily" Value="Gotham Circular"/>
+            <Setter Property="FontSize" Value="100"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+    </Window.Styles>
     
     <Grid>
         <!-- Content of the overlay -->
@@ -19,14 +45,13 @@
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
-                <RowDefinition Height="450"/>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="450"/>
+                
             </Grid.RowDefinitions>
 
-            <!-- Square 1 -->
+            <!-- Rectangle 1 -->
             <Border Grid.Row="0" Grid.Column="0" CornerRadius="50"
                     BorderThickness="3" BorderBrush="#333333">
+                <Label Content="Top" Grid.Column="0" VerticalAlignment="Top"/>
                 <Border.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </Border.RenderTransform>
@@ -38,23 +63,25 @@
                 </Border.Background>
             </Border>
 
-            <!-- Square 2 -->
-            <Border Grid.Row="2" Grid.Column="1"  CornerRadius="50"
-                    BorderThickness="3" BorderBrush="#333333">
+            <!-- Rectangle 2 -->
+            <Border Grid.Row="1" Grid.Column="1"  CornerRadius="50"
+                    BorderThickness="3" BorderBrush="#553D6B">
+                <Label Content="Bot" Grid.Column="1" VerticalAlignment="Top"/>
                 <Border.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </Border.RenderTransform>
                 <Border.Background>
                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                        <GradientStop Offset="0" Color="#1DB954"/>
-                        <GradientStop Offset="1" Color="#2CB954"/>
+                        <GradientStop Offset="0" Color="#553D6B"/>
+                        <GradientStop Offset="1" Color="#553D6B"/>
                     </LinearGradientBrush>
                 </Border.Background>
             </Border>
 
-            <!-- Square 3 -->
-            <Border Grid.Row="0" Grid.Column="2"  CornerRadius="50"
+            <!-- Rectangle 3 -->
+            <Border Grid.Row="2" Grid.Column="2"  CornerRadius="50"
                     BorderThickness="3" BorderBrush="#333333">
+                <Label Content="Mid" Grid.Column="2" VerticalAlignment="Top"/>
                 <Border.RenderTransform>
                     <ScaleTransform ScaleX="1" ScaleY="1"/>
                 </Border.RenderTransform>
