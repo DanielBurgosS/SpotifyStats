@@ -40,7 +40,7 @@ namespace SpotifyStats.Views
 
             var topTrackResponse = await spotify.Artists.GetTopTracks("3z97WMRi731dCvKklIf2X6", new ArtistsTopTracksRequest("NL"));
             string output = "";
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 5; i++)
             {
                 var track = topTrackResponse.Tracks[i];
                 output += ($"{i + 1}.{track.Name}\n");
@@ -52,7 +52,7 @@ namespace SpotifyStats.Views
         }
         private async void Top10Button_Click(object? sender, RoutedEventArgs e)
         {
-            Artists.Content = "10";
+            tracks.Content = "10";
         }
     }
 }
