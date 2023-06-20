@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using SpotifyAPI.Web;
+using SpotifyStats.Assets;
 using System.Threading.Tasks;
 
 
@@ -21,9 +22,11 @@ namespace SpotifyStats.Views
 
         private async void PersonalButton_Click(object? sender, RoutedEventArgs e)
         {
+            UserChoice.Choice = "Personal";
             SecondaryWindow secondaryWindow = new SecondaryWindow();
             secondaryWindow.Show();
             this.Close();
+            //this.Hide();
         }
 
         private async void GeneralButton_Click(object? sender, RoutedEventArgs e)

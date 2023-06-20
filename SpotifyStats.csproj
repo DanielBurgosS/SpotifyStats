@@ -10,7 +10,12 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <AvaloniaResource Include="Assets\**" />
+    <Compile Remove="Assets\UserChoice.cs" />
     <None Remove=".gitignore" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="UserChoice.cs" />
   </ItemGroup>
 
   <ItemGroup>
