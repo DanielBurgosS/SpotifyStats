@@ -21,9 +21,9 @@ namespace SpotifyStats.Views
         Avalonia.Controls.Label artists;
         Avalonia.Controls.Label genres;
         private static EmbedIOAuthServer _server;
-        private string tracksOutput;
-        private string artistsOutput;
-        private string genresOutput;
+        private string tracksOutput = "";
+        private string artistsOutput = "";
+        private string genresOutput = "";
         public SecondaryWindow()
         {
             InitializeComponent();
@@ -57,11 +57,28 @@ namespace SpotifyStats.Views
             //}
 
             //artists.Content = artistsOutput;
+            artists.Content = "2";
 
 
         }
         private async void Top10Button_Click(object? sender, RoutedEventArgs e)
         {
+            await SpotifyConnect();
+            await UpdateContent();
+
+        }
+
+        private async Task UpdateContent()
+        {
+            while (genresOutput == "") { await Task.Delay(500); }
+            artists.Content = artistsOutput;
+            tracks.Content = tracksOutput;
+            genres.Content = genresOutput;
+        }
+
+        private async Task SpotifyConnect()
+        {
+
             _server = new EmbedIOAuthServer(new Uri("http://localhost:5543/callback"), 5543);
             await _server.Start();
 
@@ -73,10 +90,8 @@ namespace SpotifyStats.Views
                 Scope = new List<string> { Scopes.UserReadEmail, Scopes.UserReadCurrentlyPlaying, Scopes.UserTopRead, Scopes.Streaming }
             };
             BrowserUtil.Open(request.ToUri());
-            await Task.Delay(2000);
-            artists.Content = artistsOutput;
-            tracks.Content = tracksOutput;
-            genres.Content = genresOutput;
+            //await Task.Delay(3000);
+
         }
         private async Task OnImplicitGrantReceived(object sender, ImplictGrantResponse response)
         {
@@ -94,7 +109,7 @@ namespace SpotifyStats.Views
             var request = new PersonalizationTopRequest();
             request.Limit = 50;
             var topArtists = await spotify.Personalization.GetTopArtists(request);
-            //string artistsOutput = "";
+            artistsOutput = "";
             for (int i = 0; i < 5; i++)
             {
                 var artist = topArtists.Items[i];
@@ -105,7 +120,7 @@ namespace SpotifyStats.Views
             //TOP TRACKS
 
             var topTracks = await spotify.Personalization.GetTopTracks();
-            //string tracksOutput = "";
+            tracksOutput = "";
             for (int i = 0; i < 5; i++)
             {
                 var track = topTracks.Items[i];
@@ -116,7 +131,7 @@ namespace SpotifyStats.Views
             //TOP GENRES
 
             var topGenres = new Dictionary<string, int>();
-            //string genresOutput = "";
+            genresOutput = "";
             foreach (var artist in topArtists.Items)
             {
                 foreach (var genre in artist.Genres)
@@ -133,16 +148,15 @@ namespace SpotifyStats.Views
             {
                 genresOutput += ($"{i + 1}. {topGenres.Keys.ElementAt(i)}\n");
             }
-            artists.Content = artistsOutput;
-            tracks.Content = tracksOutput;
-            genres.Content = genresOutput;
+            //artists.Content = artistsOutput;
+            //tracks.Content = tracksOutput;
+            //genres.Content = genresOutput;
 
 
         }
 
         private async Task OnErrorReceived(object sender, string error, string state)
         {
-            Console.WriteLine($"Aborting authorization, error received: {error}");
             await _server.Stop();
         }
     }
