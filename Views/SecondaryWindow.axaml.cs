@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Reactive;
 using System;
 using System.Linq;
+using Swan;
+using System.Xml.Linq;
 
 namespace SpotifyStats.Views
 {
@@ -40,14 +42,38 @@ namespace SpotifyStats.Views
         }
         private async void Top5Button_Click(object? sender, RoutedEventArgs e)
         {
+
+            artistsOutput = "";
+            tracksOutput = "";
+            genresOutput = "";
             //top 50 songs in the netherlands playlist id 37i9dQZEVXbKCF6dqVpDkS
-            //var config = SpotifyClientConfig.CreateDefault();
+            var config = SpotifyClientConfig.CreateDefault();
 
-            //var request = new ClientCredentialsRequest("1e4f468b601345c098a3cc41ccb2e138", "586ea92568664ffcbf28f416270a5603");
-            //var response = await new OAuthClient(config).RequestToken(request);
+            var request = new ClientCredentialsRequest("1e4f468b601345c098a3cc41ccb2e138", "586ea92568664ffcbf28f416270a5603");
+            var response = await new OAuthClient(config).RequestToken(request);
 
-            //var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
+            var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
 
+            var top50Playlist = await spotify.Playlists.Get("37i9dQZEVXbKCF6dqVpDkS");
+            var top50Tracks = top50Playlist.Tracks;
+            for (int i = 0; i < 5; i++)
+            {
+                var track = top50Tracks.Items[i];
+                string jsonAnswer = track.Track.ToJson();
+                int startIndex = jsonAnswer.LastIndexOf("Name");
+                int length = jsonAnswer.IndexOf("Popularity") - startIndex;
+
+
+                // result ends up looking something like this
+                // "Name\": \"Song Name\",\r\n    \""
+                jsonAnswer = jsonAnswer.Substring(startIndex, length);
+                startIndex = jsonAnswer.IndexOf(":") + 3;
+                //-2 is because of the ", before it
+                length = jsonAnswer.IndexOf("\r") - 2 - startIndex;
+                string songName = jsonAnswer.Substring(startIndex, length);
+                tracksOutput += $"{i + 1}. {songName}\n";
+            }
+            genresOutput += "asdf";
             //var topTrackResponse = await spotify;
             //string artistsOutput = "";
             //for (int i = 0; i < 5; i++)
@@ -57,7 +83,9 @@ namespace SpotifyStats.Views
             //}
 
             //artists.Content = artistsOutput;
-            artists.Content = "2";
+            //artists.Content = "2";
+            await UpdateContent();
+
 
 
         }
@@ -70,6 +98,8 @@ namespace SpotifyStats.Views
 
         private async Task UpdateContent()
         {
+            //condition checks only genresOutput as it is the last one to get updated
+            //thus meaning all other output strings will have been updated at this point
             while (genresOutput == "") { await Task.Delay(500); }
             artists.Content = artistsOutput;
             tracks.Content = tracksOutput;
@@ -95,6 +125,9 @@ namespace SpotifyStats.Views
         }
         private async Task OnImplicitGrantReceived(object sender, ImplictGrantResponse response)
         {
+            artistsOutput = "";
+            tracksOutput = "";
+            genresOutput = "";
             await _server.Stop();
             var spotify = new SpotifyClient(response.AccessToken);
             //var topTrackResponse = spotify.UserProfile.Stringify();
@@ -109,7 +142,6 @@ namespace SpotifyStats.Views
             var request = new PersonalizationTopRequest();
             request.Limit = 50;
             var topArtists = await spotify.Personalization.GetTopArtists(request);
-            artistsOutput = "";
             for (int i = 0; i < 5; i++)
             {
                 var artist = topArtists.Items[i];
@@ -120,7 +152,6 @@ namespace SpotifyStats.Views
             //TOP TRACKS
 
             var topTracks = await spotify.Personalization.GetTopTracks();
-            tracksOutput = "";
             for (int i = 0; i < 5; i++)
             {
                 var track = topTracks.Items[i];
@@ -131,7 +162,6 @@ namespace SpotifyStats.Views
             //TOP GENRES
 
             var topGenres = new Dictionary<string, int>();
-            genresOutput = "";
             foreach (var artist in topArtists.Items)
             {
                 foreach (var genre in artist.Genres)
