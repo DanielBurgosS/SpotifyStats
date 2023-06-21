@@ -264,5 +264,12 @@ namespace SpotifyStats.Views
         {
             await _server.Stop();
         }
+
+        public override void Show()
+        {
+            base.Show();
+            //TODO: INITIALIZE Spotify Class
+
+        }
     }
 }
