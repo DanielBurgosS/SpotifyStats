@@ -74,7 +74,7 @@ namespace SpotifyStats
 
             }
             artistNames = artistNames.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < ranking; ++i)
             {
                 artistsOutput += ($"{i + 1}. {artistNames.Keys.ElementAt(i)}\n");
             }
@@ -126,7 +126,7 @@ namespace SpotifyStats
 
             }
             topGenres = topGenres.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-            for (int i = 0; i < 5; ++i)
+            for (int i = 0; i < ranking; ++i)
             {
                 genresOutput += ($"{i + 1}. {topGenres.Keys.ElementAt(i)}\n");
             }
@@ -154,6 +154,13 @@ namespace SpotifyStats
 
         }
 
+        private async Task Results()
+        {
+            var result = await Task.WhenAll(TopArtistsAsync(10), TopTracksAsync(10), TopGenresAsync(10));
+            Artists = result[0];
+            Tracks = result[1];
+            Genres = result[2];
+        }
         public static async Task<GeneralStatistics> CreateInstanceAsync()
         {
             var config = SpotifyClientConfig.CreateDefault();
@@ -164,11 +171,7 @@ namespace SpotifyStats
 
             GeneralStatistics instance = new();
             instance.spotify_ = new SpotifyClient(config.WithToken(response.AccessToken));
-            await Task.Delay(4000);
-            var result = Task.WhenAll(instance.TopArtistsAsync(10), instance.TopTracksAsync(10), instance.TopGenresAsync(10)).Result;
-            instance.Artists = result[0];
-            instance.Tracks = result[1];
-            instance.Genres = result[2];
+            await instance.Results();
             return instance;
 
         }
