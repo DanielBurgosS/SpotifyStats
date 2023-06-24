@@ -9,8 +9,11 @@ namespace SpotifyStats
 {
     public interface IStatistics
     {
-        public Task<string> TopArtistsAsync(int ranking);
-        public Task<string> TopTracksAsync(int ranking);
-        public Task<string> TopGenresAsync(int ranking);
+        public string TopArtists(int ranking);
+        public string TopTracks(int ranking);
+        public string TopGenres(int ranking);
+        public static Task<IStatistics> CreateInstanceAsync()
+        //Irrelevant code as it will be overridden
+        { throw new NotImplementedException(); }
     }
 }

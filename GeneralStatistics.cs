@@ -8,15 +8,13 @@ using System.Threading.Tasks;
 
 namespace SpotifyStats
 {
-    public class GeneralStatistics : IStatistics
+    public class GeneralStatistics : BasicStatistics, IStatistics
     {
-        private List<string> artistIds = new List<string>();
-        private SpotifyClient spotify;
-        public Task Initialize { get; }
-        public async Task<string> TopTracksAsync(int ranking)
+        private List<string> artistIds_ = new List<string>();
+        private async Task<string> TopTracksAsync(int ranking)
         {
             string tracksOutput = "";
-            var top50Playlist = await spotify.Playlists.Get("37i9dQZEVXbKCF6dqVpDkS");
+            var top50Playlist = await spotify_.Playlists.Get("37i9dQZEVXbKCF6dqVpDkS");
             var top50Tracks = top50Playlist.Tracks;
 
             //TOP TRACKS
@@ -40,10 +38,10 @@ namespace SpotifyStats
             return tracksOutput;
         }
 
-        public async Task<string> TopArtistsAsync(int ranking)
+        private async Task<string> TopArtistsAsync(int ranking)
         {
             string artistsOutput = "";
-            var top50Playlist = await spotify.Playlists.Get("37i9dQZEVXbKCF6dqVpDkS");
+            var top50Playlist = await spotify_.Playlists.Get("37i9dQZEVXbKCF6dqVpDkS");
             var top50Tracks = top50Playlist.Tracks;
             var artistNames = new Dictionary<string, int>();
 
@@ -69,8 +67,8 @@ namespace SpotifyStats
                     else
                         artistNames[artistName]++;
 
-                    if (!artistIds.Contains(artistId))
-                        artistIds.Add(artistId);
+                    if (!artistIds_.Contains(artistId))
+                        artistIds_.Add(artistId);
 
                 }
 
@@ -83,26 +81,28 @@ namespace SpotifyStats
             return artistsOutput;
         }
 
-        public async Task<string> TopGenresAsync(int ranking)
+        private async Task<string> TopGenresAsync(int ranking)
         {
             string genresOutput = "";
             string genresJson = "";
 
             //The API can only receive a query with 50 artists IDs at a time
             //This is why this loop works in this manner
-            //Example: artistIds.Count = 81
+            //Example: artistIds_.Count = 81
             //First loop we request 50
             //Second loop we request the remaining 31
-            for (int i = 1; i * 50 - artistIds.Count <= 50; ++i)
+            while (artistIds_.Count == 0)
+                await Task.Delay(10);
+            for (int i = 1; i * 50 - artistIds_.Count <= 50; ++i)
             {
                 List<string> tempList = new List<string>();
                 //in the case that there is remaining IDs
-                if (i * 50 - artistIds.Count > 0)
+                if (i * 50 - artistIds_.Count > 0)
                     //Example 81 - 1*50 to request the remaining 31 IDs
-                    tempList = artistIds.Skip((i - 1) * 50).Take(artistIds.Count - ((i - 1) * 50)).ToList();
+                    tempList = artistIds_.Skip((i - 1) * 50).Take(artistIds_.Count - ((i - 1) * 50)).ToList();
                 else
-                    tempList = artistIds.Skip((i - 1) * 50).Take(50).ToList();
-                var tempResponse = await spotify.Artists.GetSeveral(new ArtistsRequest(tempList));
+                    tempList = artistIds_.Skip((i - 1) * 50).Take(50).ToList();
+                var tempResponse = await spotify_.Artists.GetSeveral(new ArtistsRequest(tempList));
                 genresJson += tempResponse.ToJson();
             }
 
@@ -135,24 +135,49 @@ namespace SpotifyStats
 
         }
 
-        private async Task<GeneralStatistics> CreateInstanceAsync()
+
+
+        public string TopArtists(int ranking)
+        {
+            return string.Join("\n", Artists.Split("\n").ToList().Take(ranking));
+        }
+
+        public string TopTracks(int ranking)
+        {
+            return string.Join("\n", Tracks.Split("\n").ToList().Take(ranking));
+
+        }
+
+        public string TopGenres(int ranking)
+        {
+            return string.Join("\n", Genres.Split("\n").ToList().Take(ranking));
+
+        }
+
+        public static async Task<GeneralStatistics> CreateInstanceAsync()
         {
             var config = SpotifyClientConfig.CreateDefault();
 
             var request = new ClientCredentialsRequest("1e4f468b601345c098a3cc41ccb2e138", "586ea92568664ffcbf28f416270a5603");
             var response = await new OAuthClient(config).RequestToken(request);
 
-            this.spotify = new SpotifyClient(config.WithToken(response.AccessToken));
 
             GeneralStatistics instance = new();
+            instance.spotify_ = new SpotifyClient(config.WithToken(response.AccessToken));
+            await Task.Delay(4000);
+            var result = Task.WhenAll(instance.TopArtistsAsync(10), instance.TopTracksAsync(10), instance.TopGenresAsync(10)).Result;
+            instance.Artists = result[0];
+            instance.Tracks = result[1];
+            instance.Genres = result[2];
             return instance;
 
         }
-        //call with 
-        //var myClass = await GeneralStatistics.CreateInstanceAsync();
+
         private GeneralStatistics()
         {
-
+            //To create instance: 
+            //var myClass = await GeneralStatistics.CreateInstanceAsync();
         }
     }
+
 }
