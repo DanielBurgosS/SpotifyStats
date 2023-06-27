@@ -54,7 +54,7 @@ namespace SpotifyStats.Views
         {
             SecondaryWindow secondaryWindow = new SecondaryWindow();
             secondaryWindow.Show();
-            this.Close();
+            this.Hide();
 
         }
 

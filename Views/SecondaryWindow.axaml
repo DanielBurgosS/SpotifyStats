@@ -115,6 +115,8 @@
 
       <Button Content="Top 10" Click="Top10Button_Click" Grid.Column="1" VerticalAlignment="Top" Margin="200 0 0 0" Name="HOH"/>
       <Button Content="Top 5" Click="Top5Button_Click" Grid.Column="1" VerticalAlignment="Top" Margin="0 0 200 0"/>
+      <Button Content="Back" Click="BackButton_Click" Grid.Column="0" VerticalAlignment="Top" Margin="0 0 320 0"/>
+
     </Grid>
 
   </Grid>
