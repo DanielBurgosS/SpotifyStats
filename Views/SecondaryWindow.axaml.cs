@@ -76,10 +76,17 @@ namespace SpotifyStats.Views
         }
         private async Task LogException(Exception ex)
         {
-            string date = DateTime.Now.ToString("dd_mm_yyy_hh_mm_ss");
-            using (StreamWriter writer = new StreamWriter($"../../../Log/log_{date}.txt"))
+            try
             {
-                await writer.WriteAsync($"=>{DateTime.Now} An Error occurred: {ex.StackTrace}  Message: {ex.Message}");
+                string date = DateTime.Now.ToString("dd_mm_yyy_hh_mm_ss");
+                using (StreamWriter writer = new StreamWriter($"../../../Log/log_{date}.txt"))
+                {
+                    await writer.WriteAsync($"=>{DateTime.Now} An Error occurred: {ex.StackTrace}  Message: {ex.Message}");
+                }
+            }
+            catch (Exception exc)
+            {
+                await Console.Out.WriteLineAsync(exc.Message);
             }
         }
         private void ShowMessageBox(string title, string message)
