@@ -51,6 +51,7 @@ namespace SpotifyStats.Views
             catch (Exception ex)
             {
                 ShowMessageBox("Error", ex.Message);
+                await LogException(ex);
             }
 
         }
@@ -113,6 +114,7 @@ namespace SpotifyStats.Views
             catch (Exception ex)
             {
                 ShowMessageBox("Error", ex.Message);
+                LogException(ex);
             }
 
         }
