@@ -32,6 +32,7 @@ namespace SpotifyStats.Views
         }
         private async void Top5Button_Click(object? sender, RoutedEventArgs e)
         {
+            UpdateFontSize(50);
             rank_ = 5;
             try
             {
@@ -44,8 +45,8 @@ namespace SpotifyStats.Views
 
         }
         private async void Top10Button_Click(object? sender, RoutedEventArgs e)
-
         {
+            UpdateFontSize(30);
             rank_ = 10;
             try
             {
@@ -63,6 +64,11 @@ namespace SpotifyStats.Views
             (artists.Content, tracks.Content, genres.Content) = ("", "", "");
             (artists.Content, tracks.Content, genres.Content) = await controller_.Update(rank_);
 
+        }
+
+        private void UpdateFontSize(int size)
+        {
+            (artists.FontSize, tracks.FontSize, genres.FontSize) = (size, size, size);
         }
 
 
