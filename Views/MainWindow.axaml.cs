@@ -31,22 +31,6 @@ namespace SpotifyStats.Views
         {
             UserChoice.Choice = "General";
             OpenSecondaryWindow();
-            //var config = SpotifyClientConfig.CreateDefault();
-
-            //var request = new ClientCredentialsRequest("1e4f468b601345c098a3cc41ccb2e138", "586ea92568664ffcbf28f416270a5603");
-            //var response = await new OAuthClient(config).RequestToken(request);
-
-            //var spotify = new SpotifyClient(config.WithToken(response.AccessToken));
-
-            //var topTrackResponse = await spotify.Artists.GetTopTracks("3z97WMRi731dCvKklIf2X6", new ArtistsTopTracksRequest("NL"));
-            //string output = "";
-            //for (int i = 0; i < 5; i++)
-            //{
-            //    var track = topTrackResponse.Tracks[i];
-            //    output += ($"{i + 1}.{track.Name}");
-            //}
-
-            //Title.Content = output;
 
         }
 
@@ -54,7 +38,7 @@ namespace SpotifyStats.Views
         {
             SecondaryWindow secondaryWindow = new SecondaryWindow();
             secondaryWindow.Show();
-            this.Hide();
+            this.Close();
 
         }
 

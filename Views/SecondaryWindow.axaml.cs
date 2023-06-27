@@ -4,7 +4,13 @@ using SpotifyAPI.Web;
 using System.Threading.Tasks;
 using Avalonia.Markup.Xaml;
 using System;
-using System.Windows;
+using Avalonia.Media.Imaging;
+using MessageBox.Avalonia.DTO;
+using MessageBox.Avalonia.Models;
+using System.Linq;
+using MessageBoxAvaloniaEnums = MessageBox.Avalonia.Enums;
+using EmbedIO.Utilities;
+using System.IO;
 
 namespace SpotifyStats.Views
 {
@@ -38,9 +44,13 @@ namespace SpotifyStats.Views
             {
                 await UpdateRanking();
             }
+            catch (NullReferenceException ex)
+            {
+                ShowMessageBox("Error", "The API hasn't gotten a response. Try again!");
+            }
             catch (Exception ex)
             {
-                tracks.Content = ex.Message;
+                ShowMessageBox("Error", ex.Message);
             }
 
         }
@@ -52,13 +62,30 @@ namespace SpotifyStats.Views
             {
                 await UpdateRanking();
             }
+            catch (NullReferenceException ex)
+            {
+                ShowMessageBox("Error", "The API hasn't gotten a response. Try again!");
+                await LogException(ex);
+            }
             catch (Exception ex)
             {
-                tracks.Content = ex.Message;
+                ShowMessageBox("Error", ex.Message);
             }
 
         }
-
+        private async Task LogException(Exception ex)
+        {
+            string date = DateTime.Now.ToString("dd_mm_yyy_hh_mm_ss");
+            using (StreamWriter writer = new StreamWriter($"../../../Log/log_{date}.txt"))
+            {
+                await writer.WriteAsync($"=>{DateTime.Now} An Error occurred: {ex.StackTrace}  Message: {ex.Message}");
+            }
+        }
+        private void ShowMessageBox(string title, string message)
+        {
+            var messageBoxStandardWindow = MessageBox.Avalonia.MessageBoxManager.GetMessageBoxStandardWindow(title, message);
+            messageBoxStandardWindow.Show();
+        }
         private async Task UpdateRanking()
         {
             (artists.Content, tracks.Content, genres.Content) = ("", "", "");
@@ -76,9 +103,16 @@ namespace SpotifyStats.Views
         {
             base.Show();
             //TODO: INITIALIZE Spotify Class
-            if (controller_ == null)
+            try
             {
-                controller_ = new();
+                if (controller_ == null)
+                {
+                    controller_ = new();
+                }
+            }
+            catch (Exception ex)
+            {
+                ShowMessageBox("Error", ex.Message);
             }
 
         }

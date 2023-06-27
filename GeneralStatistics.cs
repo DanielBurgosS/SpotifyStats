@@ -86,6 +86,7 @@ namespace SpotifyStats
             string genresOutput = "";
             string genresJson = "";
 
+
             //The API can only receive a query with 50 artists IDs at a time
             //This is why this loop works in this manner
             //Example: artistIds_.Count = 81
